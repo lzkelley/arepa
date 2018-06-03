@@ -9,4 +9,5 @@ Analysis scripts for new Arepo simulations exploring variations in MBH particle 
     - `/n/home01/ptorrey/Python/vogelsbergerlabtools/Python/util`
     - `/n/home01/ptorrey/Python/vogelsbergerlabtools/Python/simread`
     - `/n/home01/ptorrey/Python/vogelsbergerlabtools/Python/visualization`
+    - `/n/home01/ptorrey/Python/vogelsbergerlabtools/Python/colors_sps`
   - Made a copy '_paul_analysis' for unmodified versions
