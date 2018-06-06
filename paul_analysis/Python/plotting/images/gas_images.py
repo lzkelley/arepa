@@ -250,11 +250,14 @@ def sfr_image(  sfr_image=True, massmap=False, **kwargs):
 def gas_image(dir='./', snapnum=0, band_ids = [9,10,11], this_file=None, center=None, edge_on=False, cosmo_wrap = False, \
                         massmap=False, projaxis=0, sfr_image=False, unit_length_mpc=False, include_lighting=True, **kwargs):
     snap_ext = str(snapnum).zfill(3)
+    # LZK
+    # SNAP_PREFIX = "/snapshot_"
+    SNAP_PREFIX = "/snap_"   
     if this_file==None:
 	print "setting snapshot"
-        this_file = dir+'/snapshot_'+snap_ext
-        if not os.path.exists(this_file+'.hdf5'):
-            this_file = dir+'/snapdir_'+snap_ext+'/snapshot_'+snap_ext
+        this_file = dir + SNAP_PREFIX + snap_ext
+        if not os.path.exists(this_file + '.hdf5'):
+            this_file = dir+'/snapdir_'+snap_ext+SNAP_PREFIX+snap_ext
     print this_file
 
     gas_data = gas_image_data(this_file, **kwargs)
