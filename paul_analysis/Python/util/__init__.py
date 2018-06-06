@@ -17,12 +17,13 @@ __email__ = "ptorrey@mit.harvard.edu"
 __status__ = "Beta -- forever."
 
 
-''' #LZK
 import util.hdf5lib_param  
 import util.hdf5lib 
 import util.dir
-'''
+
+#LZK
 # from . import *
-import hdf5lib_param
-import hdf5lib
-from . import *
+# import hdf5lib_param
+# import hdf5lib
+# import dir
+# from . import *
