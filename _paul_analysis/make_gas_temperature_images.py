@@ -1,18 +1,24 @@
 
 
-import plotting.images.gas_images as gas_images
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import numpy as np
 import glob
 
-from . simread import readsubfHDF5 as subf
+
+import plotting.images.gas_images as gas_images
+
+from simread import readsubfHDF5 as subf
 # import simread.readsnapHDF5 as ws
 
 npixels = 720
 boxsize = 10.0
 
-run_names = ['explicit_feedback_256', 'explicit_feedback_256_soft',
-             'explicit_feedback_512', 'explicit_feedback_512_soft_amd']
+# run_names = ['explicit_feedback_256', 'explicit_feedback_256_soft',
+#              'explicit_feedback_512', 'explicit_feedback_512_soft_amd']
+run_names = ['lblecha_arepo_runs/L25n256TNG_test_override_all']
 
 for run_base in run_names:
     print("\n\n\n")
@@ -21,20 +27,29 @@ for run_base in run_names:
     n_snaps = len(snaplist)
     print(snaplist)
     for snapnum in [10]:
+        print("Loading subfind_catalog")
         cat = subf.subfind_catalog(
             '../' + run_base + '/', snapnum, keysel=['GroupPos', 'GroupLenType'])
         # range(np.min([10, len(cat.GroupLenType[:,0])] ) ):
+        print("cat loaded")
         for groupnr in range(1):
             if cat.GroupLenType[groupnr, 4] > 500:
                 center = cat.GroupPos[groupnr, :]
 
                 fig_, (ax1_, ax2_, ax3_) = plt.subplots(1, 3, figsize=(3, 1))
+                print("Running gas_image")
+                # image, massmap = gas_images.gas_image(
+                #     '../' + run_base + '/output/', snapnum, center=center,
+                #     xrange=[-0.01, 0.01], yrange=[-0.01, 0.01], zrange=[-0.01, 0.01],
+                #     pixels=npixels, cosmo_wrap=True, massmap=False, projaxis=0,
+                #     maxden=2e3, dynrange=1e3,
+                #     unit_length_mpc=True)
                 image, massmap = gas_images.gas_image(
                     '../' + run_base + '/output/', snapnum, center=center,
-                    xrange=[-0.01, 0.01], yrange=[-0.01, 0.01], zrange=[-0.01, 0.01],
                     pixels=npixels, cosmo_wrap=True, massmap=False, projaxis=0,
                     maxden=2e3, dynrange=1e3,
                     unit_length_mpc=True)
+                print("Complete")
 
                 for ijk in range(3):
                     image[:, :, ijk] = np.transpose(image[:, :, ijk])

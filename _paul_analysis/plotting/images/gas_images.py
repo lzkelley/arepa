@@ -252,9 +252,9 @@ def gas_image(dir='./', snapnum=0, band_ids = [9,10,11], this_file=None, center=
     snap_ext = str(snapnum).zfill(3)
     if this_file==None:
 	print "setting snapshot"
-        this_file = dir+'/snapshot_'+snap_ext
+        this_file = dir+'/snap_'+snap_ext
         if not os.path.exists(this_file+'.hdf5'):
-            this_file = dir+'/snapdir_'+snap_ext+'/snapshot_'+snap_ext
+            this_file = dir+'/snapdir_'+snap_ext+'/snap_'+snap_ext
     print this_file
 
     gas_data = gas_image_data(this_file, **kwargs)
@@ -294,6 +294,9 @@ def gas_image(dir='./', snapnum=0, band_ids = [9,10,11], this_file=None, center=
     else:
         # this just returns temperature so that we can determine colors
         color_weights = units.springel_units.gas_code_to_temperature( gas_data.gas_u, gas_data.gas_nume)        
+
+    print("gas_images.py: color_weights = ", np.shape(color_weights))
+    print(color_weights)
 
     if sfr_image:
         weights = gas_data.gas_sfr
