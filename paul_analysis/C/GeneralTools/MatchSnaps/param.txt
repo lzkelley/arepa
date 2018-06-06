@@ -1,0 +1,5 @@
+OutputDir1         /n/hernquistfs1/Illustris/Runs/Illustris-3/output/ 
+OutputDir2         /n/hernquistfs1/Illustris/Runs/Illustris-Dark-3/output/
+SnapshotFileBase1  snap
+SnapshotFileBase2  snap
+MatchOutputDir     /n/hernquistfs1/Illustris/Runs/Illustris-3/postprocessing/HaloMatchingToDark/ 

@@ -1,0 +1,6 @@
+
+RunOutputDir       /n/hernquistfs1/Illustris/Runs/L75n455FP/Output/
+TreeOutputDir      ./tree_output/ 
+SnapshotFileBase   snap
+SnapSkipFac        1
+LastSnapShotNr     135 
