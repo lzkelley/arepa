@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 
 import illustris_python as ill
 
-from . import plot
+from . import plot, utils
 from . import PATH_OUTPUT
 
 
@@ -19,7 +19,7 @@ def main(arepo_sim_dir, snap=-1):
     sim_name = os.path.split(arepo_sim_dir)[-1]
     print("Sim name: '{}'".format(sim_name))
     print("Running on directory: '{}'".format(arepo_output_dir))
-    num_snaps = get_num_snaps(arepo_output_dir)
+    num_snaps = utils.get_num_snaps(arepo_output_dir)
     print("\t{} Snapshots".format(num_snaps))
 
     # print(os.listdir(arepo_output_dir))
@@ -94,19 +94,6 @@ def image_slices(arepo_output_dir, log_flag=False, interp='nearest'):
         plt.close('all')
 
     return
-
-
-def get_num_snaps(arepo_output_dir):
-    # Get number of snapshots
-    pattern = os.path.join(arepo_output_dir, "snapdir_*")
-    snap_fnames = sorted(glob.glob(pattern))
-    if len(snap_fnames) < 1:
-        print("Pattern: '{}'".format(pattern))
-        print("Directory contents: ", os.listdir(arepo_output_dir))
-        raise RuntimeError("No snapshot directories found!")
-
-    num_snaps = len(snap_fnames)
-    return num_snaps
 
 
 def save_fig(fig, fname, sim_name):
