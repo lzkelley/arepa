@@ -5,7 +5,6 @@ import os
 import glob
 import sys
 from datetime import datetime
-import socket
 
 import numpy as np
 
@@ -21,6 +20,7 @@ from . import plot  # noqa
 
 
 '''
+import socket
 _hostname = socket.gethostname().lower()
 ILLUSTRIS_PYTHON_PATH = None
 if 'daedalus' in _hostname:
@@ -73,7 +73,8 @@ class Arepo_Sim_Path:
 
         self.sim = sim_path
         self.output = os.path.join(sim_path, self._DNAME_OUTPUT)
-        self.analysis = os.path.join(sim_path, self._DNAME_ANALYSIS)
+        # self.analysis = os.path.join(sim_path, self._DNAME_ANALYSIS)
+        self.analysis = os.path.join(self.output, self._DNAME_ANALYSIS)
 
         _check_paths = [self.output, self.analysis]
         if create:
@@ -84,6 +85,18 @@ class Arepo_Sim_Path:
 
     def __str__(self):
         return self.sim
+
+    def set_snapshot_times(self, fname):
+        scales = []
+        with open(fname, 'r') as times:
+            for line in times.readlines():
+                line = line.strip()
+                comps = line.split()
+                scales.append(float(comps[0]))
+
+        self.scales = np.array(scales)
+        self.redz = 1.0/self.scales - 1.0
+        return
 
     def snapshots(self, snap=None):
         if snap is None:
@@ -176,9 +189,16 @@ def _snap_file_from_path(fname, pattern, snap_num=None):
 
 
 def snap_files(path):
-    pattern = "snap_*.hdf5"
-    fname = os.path.join(path, pattern)
-    snaps = sorted(glob.glob(fname))
+    # patterns = ["snap_[0-9]{3}.hdf5", "snap_[0-9]{3}", "snapdir_[0-9]{3}"]
+    patterns = ["snap_*.hdf5", "snap_" + "[0-9]"*3, "snapdir_" + "[0-9]"*3]
+    for pat in patterns:
+        fname = os.path.join(path, pat)
+        snaps = sorted(glob.glob(fname))
+        if len(snaps) > 0:
+            break
+
+        # print("No files found matching '{}'".format(fname))
+
     return snaps
 
 
