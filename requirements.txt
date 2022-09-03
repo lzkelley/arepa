@@ -1,0 +1,5 @@
+numpy
+matplotlib
+zcode
+h5py
+tqdm
